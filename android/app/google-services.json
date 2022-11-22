@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "583542775440",
+    "project_id": "ictemos",
+    "storage_bucket": "ictemos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583542775440:android:db7dbf2dfb274a790a8215",
+        "android_client_info": {
+          "package_name": "com.firstemos.todoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "583542775440-hq4175girqf7ircjqi425jl13mdtj0d2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlgn9IDs9KZR5aMRmHNWpimhZjtXIhkzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "583542775440-hq4175girqf7ircjqi425jl13mdtj0d2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
