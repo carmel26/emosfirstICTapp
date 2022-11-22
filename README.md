@@ -1,7 +1,8 @@
 # todoapp
 
-A new Flutter project.
-
+A project created for the 1st ICT EMoS Conference
+Presented by Embedded Club in Nelson Mandela African 
+Institution of Science and Technology.
 ## Getting Started
 
 This project is a starting point for a Flutter application.
