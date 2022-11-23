@@ -44,83 +44,88 @@ class _NotesViewState extends State<NotesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text.rich(
-            TextSpan(
-              children: <InlineSpan>[
-                WidgetSpan(
-                    child: Icon(Icons.note_alt_sharp,
-                        color: Color.fromARGB(255, 255, 255, 255))),
-                TextSpan(text: 'This is your list'),
-              ],
-            ),
+      appBar: AppBar(
+        title: const Text.rich(
+          TextSpan(
+            children: <InlineSpan>[
+              WidgetSpan(
+                  child: Icon(Icons.note_alt_sharp,
+                      color: Color.fromARGB(255, 255, 255, 255))),
+              TextSpan(text: 'This is your list'),
+            ],
           ),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(createOrUpdateNoteRoute);
-                },
-                icon: const Icon(Icons.add)),
-            PopupMenuButton<MenuAction>(onSelected: (value) async {
-              switch (value) {
-                case MenuAction.logout:
-                  final shouldLogOut =
-                      await showLogOutDialog(context: context, text: 'Logout');
-                  if (shouldLogOut) {
-                    context.read<AuthBloc>().add(
-                          const AuthEventLogOut(),
-                        );
-                  } else {}
-                  break;
-                case MenuAction.test:
-                  // TODO: Handle this case after .
-                  break;
-              }
-            }, itemBuilder: (context) {
-              return const [
-                PopupMenuItem<MenuAction>(
-                    value: MenuAction.logout,
-                    child: Text.rich(
-                      TextSpan(
-                        children: <InlineSpan>[
-                          WidgetSpan(
-                              child: Icon(Icons.logout, color: Colors.red)),
-                          TextSpan(text: 'Logout'),
-                        ],
-                      ),
-                    )
-                    // icon : Icon(Icons.logout),
-                    )
-              ];
-            })
-          ],
         ),
-        body: StreamBuilder(
-            // stream:  _noteService.allNotes,
-            stream: _noteService.allNotes(ownerUSerId: userId),
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.active:
-                case ConnectionState.waiting:
-                  if (snapshot.hasData) {
-                    final allNotes = snapshot.data as Iterable<CloudNote>;
-                    return NoteListView(
-                      notes: allNotes,
-                      onDeleteNote: (note) async {
-                        await _noteService.deleteNote(
-                            documentId: note.documentId);
-                      },
-                      onTapNote: (note) {
-                        Navigator.of(context).pushNamed(createOrUpdateNoteRoute,
-                            arguments: note);
-                      },
-                    );
-                  } else {
-                    return const CircularProgressIndicator();
-                  }
-                default:
-                  return const CircularProgressIndicator();
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(createOrUpdateNoteRoute);
+              },
+              icon: const Icon(Icons.add)),
+          PopupMenuButton<MenuAction>(onSelected: (value) async {
+            switch (value) {
+              case MenuAction.logout:
+                final shouldLogOut =
+                    await showLogOutDialog(context: context, text: 'Logout');
+                if (shouldLogOut) {
+                  context.read<AuthBloc>().add(
+                        const AuthEventLogOut(),
+                      );
+                } else {}
+                break;
+              case MenuAction.test:
+                // TODO: Handle this case after .
+                break;
+            }
+          }, itemBuilder: (context) {
+            return const [
+              PopupMenuItem<MenuAction>(
+                  value: MenuAction.logout,
+                  child: Text.rich(
+                    TextSpan(
+                      children: <InlineSpan>[
+                        WidgetSpan(
+                            child: Icon(Icons.logout, color: Colors.red)),
+                        TextSpan(text: 'Logout'),
+                      ],
+                    ),
+                  )
+                  // icon : Icon(Icons.logout),
+                  )
+            ];
+          })
+        ],
+      ),
+      body: StreamBuilder(
+        // stream:  _noteService.allNotes,
+        stream: _noteService.allNotes(ownerUSerId: userId),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.active:
+            case ConnectionState.waiting:
+              if (snapshot.hasData) {
+                final allNotes = snapshot.data as Iterable<CloudNote>;
+                return NoteListView(
+                  notes: allNotes,
+                  onDeleteNote: (note) async {
+                    await _noteService.deleteNote(documentId: note.documentId);
+                  },
+                  onTapNote: (note) {
+                    Navigator.of(context)
+                        .pushNamed(createOrUpdateNoteRoute, arguments: note);
+                  },
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
               }
-            }));
+            default:
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+          }
+        },
+      ),
+    );
   }
 }
